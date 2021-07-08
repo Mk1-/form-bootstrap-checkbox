@@ -1,0 +1,67 @@
+{% extends 'base-bootstrapcdn.html.twig' %}
+
+{% block title %}List{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .price-value {
+    text-align: right;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container-lg">
+
+    {% if app.user %}
+    <div class="row">
+        <div class="col mb-3 text-right">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-3">
+            {{ form_row(form.symbol) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.date_from) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.date_to) }}
+        </div>
+        <div class="col-3 my-auto">
+            {{ form_widget(form.search) }}
+            <a class="btn btn-primary" style="margin-left: 2em" href="{{ path('debt') }}" role="button">New Debt</a>
+        </div>
+    </div>
+
+    {% if list %}
+    <table class="table">
+    <tr><th></th><th>Symbol</th><th>Date</th><th>Value</th></tr>
+    {% for line in list %}
+        <tr>
+            <td><input type="checkbox" name="tick[]" class="form-check-input" value="{{ line.id }}" {% if line.id in tick %} checked {% endif %}/></td>
+            <td>{{ line.symbol }}</td>
+            <td>{{ line.date|date("Y-m-d") }}</td>
+            <td class="price-value">{{ line.value }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div class="row">
+        <div class="col my-auto">
+            {{ form_widget(form.delete) }}
+        </div>
+    </div>
+    {% endif %}
+
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

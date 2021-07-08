@@ -1,0 +1,45 @@
+{% extends 'base-bootstrapcdn.html.twig' %}
+
+{% block title %}New Debt{% endblock %}
+
+{% block body %}
+<div class="container-lg">
+
+    {% if app.user %}
+        <div class="row">
+            <div class="col mb-3 text-right">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-3 mx-auto">
+            {{ form_row(form.symbol) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 mx-auto">
+            {{ form_row(form.date) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 mx-auto">
+            {{ form_row(form.value) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 mx-auto text-center mt-3">
+            {{ form_widget(form.save) }}
+            <a class="btn btn-primary" style="margin-left: 2em" href="{{ path('list') }}" role="button">Cancel</a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
